@@ -22,8 +22,13 @@ type
 proc templateify*(
     input: string,
     data: Table[string, string],
-    attributes: seq[TemplatingAttribute] = defaultAttributes
-  ): string =
+    attributes: seq[TemplatingAttribute] = @[
+      createAttribute("bold", bold),
+      createAttribute("italic", italic),
+      createAttribute("list_by_comma", list_by_comma),
+      createAttribute("list_by_newline", list_by_newline),
+      createAttribute("span_separated", span_separated)
+    ]): string =
 
   var
     tokens: seq[Token]

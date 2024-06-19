@@ -1,10 +1,10 @@
-proc italic(s: string): string  =
+proc italic*(s: string): string  =
   return "<em>" & s & "</em>"
 
-proc bold(s: string): string  =
+proc bold*(s: string): string  =
   return "<strong>" & s & "</strong>"
 
-proc list(s: string, separator: char): string =
+proc list*(s: string, separator: char): string =
   var
     backslash = false
     tmp = ""
@@ -29,7 +29,7 @@ proc list(s: string, separator: char): string =
   
   return result
 
-proc span_separated(s: string): string =
+proc span_separated*(s: string): string =
   for ch in s:
     if ch == ' ':
       result.add(" ")
@@ -37,10 +37,10 @@ proc span_separated(s: string): string =
       result.add("<span>" & ch & "</span>")
   return result
 
-proc list_by_comma(s: string): string =
+proc list_by_comma*(s: string): string =
   return list(s, ',')
 
-proc list_by_newline(s: string): string =
+proc list_by_newline*(s: string): string =
   return list(s, '\n')
 
 type
@@ -52,11 +52,3 @@ func createAttribute*(marker: string, generator: proc (s: string): string): Temp
   result.marker = marker
   result.generator = generator
   return result
-
-let defaultAttributes* = @[
-  createAttribute("bold", bold),
-  createAttribute("italic", italic),
-  createAttribute("list_by_comma", list_by_comma),
-  createAttribute("list_by_newline", list_by_newline),
-  createAttribute("span_separated", span_separated)
-]

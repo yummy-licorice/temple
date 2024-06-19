@@ -2,7 +2,7 @@
 
 version       = "0.1.0"
 author        = "penguinite"
-description   = "A simple and extensible templating library"
+description   = "A simple and somewhat extensible templating library"
 license       = "BSD-3-Clause"
 srcDir        = "src"
 

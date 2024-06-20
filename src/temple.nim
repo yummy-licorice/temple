@@ -1,4 +1,5 @@
 import std/[tables]
+from std/strutils import isEmptyOrWhitespace
 import temple/attributes
 
 type
@@ -71,7 +72,8 @@ proc templateify*(
         else:
           # create a normal "Block" token with the tmp var
           # Since we are creating a new template keyword
-          addToTree(Block, tmp)
+          if not tmp.isEmptyOrWhitespace():
+            addToTree(Block, tmp)
       # Either way, clear tmp at the end.
       tmp = ""
 
@@ -84,8 +86,9 @@ proc templateify*(
     of ')':
       # Add whatever we hav captured as an if satement
       if tmp != "":
+
         # add a simple NOT check.
-        var condition = data.hasKey(tmp)
+        var condition = data.hasKey(tmp) and not data[tmp].isEmptyOrWhitespace()
         if tmp[0] == '!':
           toggle condition
 

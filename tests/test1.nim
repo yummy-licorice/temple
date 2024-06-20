@@ -1,12 +1,34 @@
-# This is just an example to get you started. You may wish to put all of your
-# tests into a single file, or separate them into multiple `test1`, `test2`
-# etc. files (better names are recommended, just make sure the name starts with
-# the letter 't').
-#
-# To run these tests, simply execute `nimble test`.
+import temple, std/tables
 
-import unittest
+let txt = """
+<h1>$item$</h1>
 
-import temple
-test "can add":
-  check add(5, 5) == 10
+A
+$if(item)$
+<p>Item: hello</p>
+$end$
+
+B
+$if(!item)$
+<p>Item: Hello 2</p>
+$end$
+
+C
+$if(item_b)$
+<p>Item: helloee</p>
+$end$
+
+D
+$if(!item_b)$
+<p>Item: Hello 2eee</p>
+$end$
+"""
+let resolt = templateify(
+  txt,
+  {
+   "item": "Hello!",
+   "item_b": ""
+  }.toTable
+)
+echo "---"
+stdout.write resolt

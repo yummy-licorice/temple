@@ -143,7 +143,9 @@ proc templateify*(
         if nextToken.kind == Attribute:
           for attribute in attributes:
             if nextToken.inner == attribute.marker:
-              temp = attribute.generator(temp)
+              {.gcsafe.}: # Well yeah, I guess its an indirect call...
+                          # But, why does it matter? I just don't get Nim's gcsafety...
+                temp = attribute.generator(temp)
 
       # Finally, add the temp variable to the result
       result.add(temp)

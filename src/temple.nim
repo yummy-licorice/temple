@@ -86,13 +86,16 @@ proc templateify*(
     of ')':
       # Add whatever we hav captured as an if satement
       if tmp != "":
-
+        var condition: bool
         # add a simple NOT check.
-        var condition = data.hasKey(tmp) and not data[tmp].isEmptyOrWhitespace()
         if tmp[0] == '!':
+          tmp = tmp[1..^1]
+          condition = data.hasKey(tmp) and not data[tmp].isEmptyOrWhitespace()
           toggle condition
+        else:
+          condition = data.hasKey(tmp) and not data[tmp].isEmptyOrWhitespace()
 
-        addToTree(If, tmp, data.hasKey(tmp))
+        addToTree(If, tmp, condition)
       tmp = ""
     of '[':
       # Clear tmp variable and add whatever item has been parsed.

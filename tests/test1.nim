@@ -1,37 +1,42 @@
 import temple, std/tables
 
-let txt = """
-<h1>$item$</h1>
-
-A
-$if(item)$
-<p>Item: hello</p>
+echo templateify(
+  """
+$if(exists_and_full)$
+<p>$exists_and_full$</p>
 $end$
 
-B
-$if(!item)$
-<p>Item: Hello 2</p>
+$if(!exists_and_full)$
+<p>I shouldn't be running! A</p>
 $end$
-
-C
-$if(item_b)$
-<p>Item: helloee</p>
-$end$
-
-D
-$if(!item_b)$
-<p>Item: Hello 2eee</p>
-$end$
-"""
-let resolt = templateify(
-  txt,
-  {
-   "item": "Hello!",
-   "item_b": ""
-  }.toTable
+  """,
+  {"exists_and_full": "Hi! I exist and I am full!"}.toTable
 )
-echo "---"
-stdout.write resolt
+echo templateify(
+  """
+$if(exists_and_not_full)$
+<p>I shouldn't be running! B</p>
+$end$
+
+$if(!exists_and_not_full)$
+<p>Helo! I should be running!</p>
+$end$
+  """,
+  {"exists_and_not_full": ""}.toTable
+)
+
+echo templateify(
+  """
+$if(doesnt_exist)$
+<p>I shouldn't be running! C</p>
+$end$
+
+$if(!doesnt_exist)$
+<p>Helo! I should be running! C</p>
+$end$
+  """,
+  initTable[string,string]()
+)
 
 
 echo templateify(

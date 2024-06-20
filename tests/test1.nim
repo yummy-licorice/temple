@@ -32,3 +32,9 @@ let resolt = templateify(
 )
 echo "---"
 stdout.write resolt
+
+
+echo templateify(
+  "<h1>$name$</h1>",
+  {"name":"John"}.toTable
+)

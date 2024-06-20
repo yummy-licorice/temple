@@ -106,6 +106,22 @@ proc templateify*(
       tmp = ""
     else:
       tmp.add(ch)
+  # One last check, just to see if there is a token we haven't parsed yet.
+  if tmp != "":
+    if inItem:
+      case tmp:
+      of "end":
+        # Create an "End" token
+        addToTree(End)
+      else:
+        # create an "Item" token with the tmp var
+        # Since we are exiting a template keyword
+        addToTree(Item, tmp)
+    else:
+      # create a normal "Block" token with the tmp var
+      # Since we are creating a new template keyword
+      if not tmp.isEmptyOrWhitespace():
+        addToTree(Block, tmp)
 
   var
     i, currentIf = -1

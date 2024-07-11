@@ -43,3 +43,21 @@ echo templateify(
   "<h1>$name$</h1>",
   {"name":"John"}.toTable
 )
+
+echo templateify(
+  """
+$if(enabled)$
+$if(result)$
+<h1>$result$</h1>
+$end$
+$end$
+
+$if(!enabled)$
+<h2>Help</h2>
+$end$
+  """,
+  {
+    "result":"John",
+    "enabled":"true",
+  }.toTable
+)

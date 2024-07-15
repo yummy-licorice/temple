@@ -73,7 +73,7 @@ templateify(
 )
 ```
 
-templateString is just a string containing the actual template itself, like "<h1>$name$</h1>"
+templateString is just a string containing the actual template itself, like "&lt;h1&gt;\$name\$&lt;/h1&gt;"
 templateData should be a Table consisting of only strings, where the key is the name of an item and the value is the data that that item should have.
 
 Here is an example of a valid `templateify()` cal:
@@ -96,7 +96,7 @@ $end$
   }.toTable
 )
 ```
-This will output "<h1>Hello John</h1>"  but if the `name` key in the table was an empty string or if it didn't exist at all, then the output instead would have been "<p>You have to insert a valid name.</p>"
+This will output "&lt;h1&gt;Hello John&lt;/h1&gt;"  but if the `name` key in the table was an empty string or if it didn't exist at all, then the output instead would have been "&lt;p&gt;You have to insert a valid name.&lt;/p&gt;"
 
 <!--
 TODO: Custom attributes

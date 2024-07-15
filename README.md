@@ -1,12 +1,20 @@
 # temple
 
-A simple templating library
+A simple templating library, temple was designed with ease of use and performance in mind.
 
-## How to
+Temple is perfect for the following use-cases:
 
-`$item$` to insert an item.
+- When you need a simple templating library with no macro fuss.
+- When you need to template stuff at run-time (Fx. if you let the user replace assets at run-time)
+- When you need a bit of magic such as conditionals and maybe attributes but nothing fancy.
 
-With support for conditionals:
+*Note:* Do **NOT** run temple on untrusted input, as this wasn't designed with that in mind. This is meant for trustable input, such as a server's own template files, but not user input or anything manipulatable by a malicious actor.
+
+## How to template
+
+`$item$` to insert an item at that point.
+
+Temple supports conditionals like so:
 
 ```
 $if(item)$
@@ -41,3 +49,55 @@ Second condition, this will display if item doesn't exist.
 And it acts like an else block.
 $end$
 ```
+
+## How to use
+
+Install temple by running `nimble install https://github.com/penguinite/pothole >= 0.2.3` and add it to your `.nimble` file like so:
+
+```
+requires "https://github.com/penguinite/temple.git >= 0.2.3"
+```
+
+And then, import `temple` as a module in whatever you want to use.
+
+```nim
+import temple
+```
+
+And whenever you want to template something, call the `templateify()` procedure like so:
+
+```nim
+templateify(
+  templateString,
+  templateData
+)
+```
+
+templateString is just a string containing the actual template itself, like "<h1>$name$</h1>"
+templateData should be a Table consisting of only strings, where the key is the name of an item and the value is the data that that item should have.
+
+Here is an example of a valid `templateify()` cal:
+
+```nim
+import temple, std/tables
+
+templateify(
+  """
+$if(name)$
+<h1>Hello $name$</h1>
+$end$
+
+$if(!name)$
+<p>You have to insert a valid name.</p>
+$end$
+  """,
+  {
+    "name": "John",
+  }.toTable
+)
+```
+This will output "<h1>Hello John</h1>"  but if the `name` key in the table was an empty string or if it didn't exist at all, then the output instead would have been "<p>You have to insert a valid name.</p>"
+
+<!--
+TODO: Custom attributes
+-->

@@ -80,12 +80,13 @@ proc templateify*(
       # And flip the inItem switch on-and-off
       toggle(inItem)
     of '(':
-      # It's probably an if statement
-      # Clear tmp
-      tmp = ""
+      if inItem:
+        # It's probably an if statement
+        # Clear tmp
+        tmp = ""
     of ')':
       # Add whatever we hav captured as an if satement
-      if tmp != "":
+      if tmp != "" and inItem:
         var condition: bool
         # add a simple NOT check.
         if tmp[0] == '!':
@@ -96,7 +97,7 @@ proc templateify*(
           condition = data.hasKey(tmp) and not data[tmp].isEmptyOrWhitespace()
 
         addToTree(If, tmp, condition)
-      tmp = ""
+        tmp = ""
     of '[':
       # Clear tmp variable and add whatever item has been parsed.
       if tmp != "":

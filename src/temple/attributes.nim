@@ -4,7 +4,7 @@ proc italic*(s: string): string  =
 proc bold*(s: string): string  =
   return "<strong>" & s & "</strong>"
 
-proc list*(s: string, separator: char): string =
+proc list(s: string, separator: char): string =
   var
     backslash = false
     tmp = ""

@@ -127,6 +127,19 @@ proc templateify*(
       if not tmp.isEmptyOrWhitespace():
         addToTree(Block, tmp)
 
+  when defined(templeDebug):
+    for i in tokens:
+      echo "---"
+      echo "Kind: ", i.kind
+      case i.kind:
+      of Block, Item, Attribute:
+        echo "Inner: ", i.inner
+      of If:
+        echo "Condition: ", i.condition
+        echo "Result: ", i.result
+      else:
+        discard
+      
   var
     i, currentIf = -1
     conditions: seq[bool]= @[]

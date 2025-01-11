@@ -56,7 +56,7 @@ proc templateify*(
   # Tokenization process
   for ch in input:
     case ch:
-    of '$':
+    of '^':
       # Check if there is something in the tmp var already
       # If so, then create a token with the appropriate type
       if tmp != "":
